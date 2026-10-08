@@ -3,12 +3,22 @@
 <package format="3">
   <name>nulina_bringup</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="vladik1209@gmail.com">vladushked</maintainer>
-  <license>TODO: License declaration</license>
+  <description>Nulina ROV hardware bringup and platform configuration</description>
+  <maintainer email="p.v.elesin@gmail.com">Pavel Elesin</maintainer>
+  <license>MIT</license>
 
   <exec_depend>ros2launch</exec_depend>
   <exec_depend>rclpy</exec_depend>
+  <exec_depend>ament_index_python</exec_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>lifecycle_msgs</exec_depend>
+  <exec_depend>ms5837_pressure_sensor</exec_depend>
+  <exec_depend>parser</exec_depend>
+  <exec_depend>power_control</exec_depend>
+  <exec_depend>serial_driver</exec_depend>
+  <exec_depend>stingray_core_communication</exec_depend>
+  <exec_depend>stingray_core_control</exec_depend>
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
   <test_depend>ament_pep257</test_depend>

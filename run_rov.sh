@@ -1,39 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -e
-
-echo "----------------------------------------"
-echo "🔧 Building Stingray core packages for NULINA..."
-echo "----------------------------------------"
+set -eo pipefail
 
 cd "$(dirname "$0")"
+export STINGRAY_CONFIG_DIR="${STINGRAY_CONFIG_DIR:-$(pwd)/src/nulina_config/control}"
 
-colcon build \
-    --base-paths src/stingray_core/src src/nulina_bringup \
-    --packages-select \
-    dvl_msgs \
-    dvl_a50 \
-    stingray_interfaces \
-    stingray_core_control \
-    stingray_core_communication \
-    lights_device \
-    serial_driver \
-    io_context \
-    asio_cmake_module \
-    vectornav_msgs \
-    vectornav \
-    stingray_interface_bridge \
-    pressure_sensor \
-    nulina_bringup
-
-echo "----------------------------------------"
-echo "🔄 Sourcing install/setup.bash ..."
-echo "----------------------------------------"
-
+./build.sh
 source install/setup.bash
 
-echo "----------------------------------------"
-echo "🚀 Launching NULINA ROV..."
-echo "----------------------------------------"
-
-ros2 launch nulina_bringup run_rov.launch.py
+exec ros2 launch nulina_bringup run_rov.launch.py "$@"

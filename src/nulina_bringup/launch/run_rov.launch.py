@@ -1,46 +1,74 @@
+"""Bring up Nulina's thrusters, AH127C IMU, MS5837 and GPIO power control."""
+
 import os
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import EnvironmentVariable, LaunchConfiguration, PathJoinSubstitution
+from launch_ros.actions import Node
 
 
 def generate_launch_description():
+    """Connect the platform configuration to the Nulina hardware drivers."""
+    platform_share = get_package_share_directory('nulina_bringup')
+    config_dir = os.path.join(platform_share, 'nulina_config')
+    serial_share = get_package_share_directory('serial_driver')
 
-    comm_pkg = get_package_share_directory("stingray_core_communication")
-    control_pkg = get_package_share_directory("stingray_core_control")
-    nulina_config_pkg = get_package_share_directory("nulina_bringup")
-    ms5837_pkg = get_package_share_directory("ms5837_pressure_sensor")
-    power_pkg = get_package_share_directory("power_control")
-    ah127c_pkg = get_package_share_directory("parser")
+    def include(package, filename):
+        return IncludeLaunchDescription(PythonLaunchDescriptionSource(
+            os.path.join(get_package_share_directory(package), 'launch', filename)
+        ))
 
-    thruster_link_launch = os.path.join(comm_pkg, "launch", "thruster_link.launch.py")
-    core_control_launch = os.path.join(
-        control_pkg, "launch", "stingray_core_control.launch.py"
-    )
-    control_params = os.path.join(nulina_config_pkg, "nulina_config", "control", "stingray_core_control_node.yaml")
-    thruster_matrix_params = os.path.join(nulina_config_pkg, "nulina_config", "control", "thruster_matrix.yaml")
-    controllers_params = os.path.join(nulina_config_pkg, "nulina_config", "control", "controllers.yaml")
-    ms5837_launch = os.path.join(ms5837_pkg, "launch", "ms5837.launch.py")
-    power_launch = os.path.join(power_pkg, "launch", "power_gpio.launch.py")
-    ah127c_launch = os.path.join(ah127c_pkg, "launch", "parser.launch.py")
-
-    thruster_link = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(thruster_link_launch)
-    )
-
-    core_control = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(core_control_launch),
-        launch_arguments={
-            'params_file': control_params,
-            'params_file_thruster': thruster_matrix_params,
-            'params_file_controllers': controllers_params,
-        }.items()
-    )
-
-    ms5837 = IncludeLaunchDescription(PythonLaunchDescriptionSource(ms5837_launch))
-    power = IncludeLaunchDescription(PythonLaunchDescriptionSource(power_launch))
-    ah127c = IncludeLaunchDescription(PythonLaunchDescriptionSource(ah127c_launch))
-
-    return LaunchDescription([thruster_link, core_control, ms5837, power, ah127c])
+    return LaunchDescription([
+        DeclareLaunchArgument(
+            'control_config_dir',
+            default_value=EnvironmentVariable(
+                'STINGRAY_CONFIG_DIR',
+                default_value=os.path.join(config_dir, 'control'),
+            ),
+            description='Directory containing the three control YAML files',
+        ),
+        DeclareLaunchArgument(
+            'thruster_params_file',
+            default_value=os.path.join(config_dir, 'communication', 'thruster.params.yaml'),
+            description='Serial port settings for the thruster board',
+        ),
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(os.path.join(
+                serial_share, 'launch', 'serial_driver_bridge_node.launch.py'
+            )),
+            launch_arguments={
+                'params_file': LaunchConfiguration('thruster_params_file'),
+            }.items(),
+        ),
+        Node(
+            package='stingray_core_communication',
+            executable='thrusters_driver_node',
+            name='thrusters_driver_node',
+            output='screen',
+        ),
+        # The upstream launch hard-codes its own YAML files. Load the platform
+        # files here and give its parameter saver the same directory.
+        Node(
+            package='stingray_core_control',
+            executable='stingray_core_control_node',
+            name='stingray_core_control_node',
+            output='screen',
+            parameters=[
+                PathJoinSubstitution([LaunchConfiguration('control_config_dir'), filename])
+                for filename in (
+                    'stingray_core_control_node.yaml',
+                    'thruster_matrix.yaml',
+                    'controllers.yaml',
+                )
+            ],
+            additional_env={
+                'STINGRAY_CONFIG_DIR': LaunchConfiguration('control_config_dir'),
+            },
+        ),
+        include('ms5837_pressure_sensor', 'ms5837.launch.py'),
+        include('power_control', 'power_gpio.launch.py'),
+        include('parser', 'parser.launch.py'),
+    ])

@@ -3,9 +3,8 @@ stingray_core_control_node:
     rate_hz: 100.0
     topic_control_data: /control/data
     topic_loop_flags: /control/loop_flags
-    topic_imu_angular: /vectornav/raw/common/yawpitchroll
-    topic_imu_linear_accel: /vectornav/imu_accel
-    topic_imu_angular_rate: /vectornav/imu
+    topic_imu_data: /imu_full_data
+    topic_pressure_sensor: /ms5837/depth
     thrusters:
     - depth_front_right
     - depth_back_right
