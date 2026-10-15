@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+CLI_PATH="$(realpath "${BASH_SOURCE[0]}")"
+PROJECT_ROOT="$(realpath "$(dirname "$CLI_PATH")/..")"
+
+usage()
+{
+    cat <<'EOF'
+Usage: run <target> [options] [launch arguments]
+
+Targets:
+  nulina        Build and launch Nulina locally
+
+Options:
+  --debug       Print commands at every launcher layer
+  -h, --help    Show this help
+
+EOF
+}
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" || "${1:-}" == "help" ]]; then
+    usage
+    exit 0
+fi
+
+if [[ "$#" -eq 0 ]]; then
+    usage >&2
+    exit 2
+fi
+
+target="$1"
+shift
+
+if [[ "${1:-}" == "--debug" ]]; then
+    set -x
+fi
+
+case "$target" in
+    nulina)
+        exec "$PROJECT_ROOT/local_run.sh" "$@"
+        ;;
+    *)
+        echo "Unknown target: $target" >&2
+        echo "Available targets: nulina" >&2
+        exit 2
+        ;;
+esac

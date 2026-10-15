@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
-set -eo pipefail
+cd -- "$(dirname -- "${BASH_SOURCE[0]}")"
 
-cd "$(dirname "$0")"
+if [[ "${1:-}" == "--debug" ]]; then
+    shift
+    set -x
+fi
 export STINGRAY_CONFIG_DIR="${STINGRAY_CONFIG_DIR:-$(pwd)/src/nulina_config/control}"
 
 ./build.sh
