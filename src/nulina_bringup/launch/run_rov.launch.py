@@ -48,6 +48,7 @@ def generate_launch_description():
             executable='thrusters_driver_node',
             name='thrusters_driver_node',
             output='screen',
+            parameters=[LaunchConfiguration('thruster_params_file')],
         ),
         # The upstream launch hard-codes its own YAML files. Load the platform
         # files here and give its parameter saver the same directory.
