@@ -3,8 +3,10 @@ stingray_core_control_node:
     rate_hz: 100.0
     topic_control_data: /control/data
     topic_loop_flags: /control/loop_flags
-    topic_imu_data: /imu_full_data
-    topic_pressure_sensor: /ms5837/depth
+    sensor_backend: ah127c_ms5837
+    topic_ah127c_imu: /imu_full_data
+    topic_ms5837_depth: /ms5837/depth
+    ms5837_depth_scale: 0.001
     thrusters:
     - depth_front_right
     - depth_back_right
@@ -12,13 +14,6 @@ stingray_core_control_node:
     - surge_left
     - depth_back_left
     - depth_front_left
-    axes_u:
-    - u_surge
-    - u_sway
-    - u_heave
-    - u_roll
-    - u_pitch
-    - u_yaw
     axes:
     - surge
     - sway
