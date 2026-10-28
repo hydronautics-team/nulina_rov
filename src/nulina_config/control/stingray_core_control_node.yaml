@@ -3,90 +3,100 @@ stingray_core_control_node:
     rate_hz: 100.0
     topic_control_data: /control/data
     topic_loop_flags: /control/loop_flags
+    # Выбираем альтернативный комплект датчиков
+    sensor_backend: ah127c_ms5837 # vectornav
+    # AH127C: sensor_msgs/msg/Imu
+    topic_ah127c_imu: /imu_full_data
+    # MS5837: std_msgs/msg/Float32
+    topic_ms5837_depth: /ms5837/depth
+    # Драйвер MS5837 публикует глубину в миллиметрах,
+    # а контроллер работает в метрах
+    ms5837_depth_scale: 0.001
+    # Старые топики можно оставить для быстрого возврата на VectorNav
     topic_imu_angular: /vectornav/raw/common/yawpitchroll
     topic_imu_linear_accel: /vectornav/imu_accel
     topic_imu_angular_rate: /vectornav/imu
     thrusters:
-    - depth_front_right
-    - depth_back_right
-    - surge_right
-    - surge_left
-    - depth_back_left
-    - depth_front_left
+      - depth_front_right
+      - depth_back_right
+      - surge_right
+      - surge_left
+      - depth_back_left
+      - depth_front_left
     axes_u:
-    - u_surge
-    - u_sway
-    - u_heave
-    - u_roll
-    - u_pitch
-    - u_yaw
+      - u_surge
+      - u_sway
+      - u_heave
+      - u_roll
+      - u_pitch
+      - u_yaw
     axes:
-    - surge
-    - sway
-    - heave
-    - roll
-    - pitch
-    - yaw
+      - surge
+      - sway
+      - heave
+      - roll
+      - pitch
+      - yaw
     yaw:
-    - K_p
-    - K_1
-    - K_2
-    - K_i
-    - I_min
-    - I_max
-    - out_sat
-    - ap_K
-    - ap_T
+      - K_p
+      - K_1
+      - K_2
+      - K_i
+      - I_min
+      - I_max
+      - out_sat
+      - ap_K
+      - ap_T
     pitch:
-    - K_p
-    - K_1
-    - K_2
-    - K_i
-    - I_min
-    - I_max
-    - out_sat
-    - ap_K
-    - ap_T
+      - K_p
+      - K_1
+      - K_2
+      - K_i
+      - I_min
+      - I_max
+      - out_sat
+      - ap_K
+      - ap_T
     roll:
-    - K_p
-    - K_1
-    - K_2
-    - K_i
-    - I_min
-    - I_max
-    - out_sat
-    - ap_K
-    - ap_T
+      - K_p
+      - K_1
+      - K_2
+      - K_i
+      - I_min
+      - I_max
+      - out_sat
+      - ap_K
+      - ap_T
     surge:
-    - K_p
-    - K_1
-    - K_2
-    - K_i
-    - I_min
-    - I_max
-    - out_sat
-    - ap_K
-    - ap_T
+      - K_p
+      - K_1
+      - K_2
+      - K_i
+      - I_min
+      - I_max
+      - out_sat
+      - ap_K
+      - ap_T
     sway:
-    - K_p
-    - K_1
-    - K_2
-    - K_i
-    - I_min
-    - I_max
-    - out_sat
-    - ap_K
-    - ap_T
+      - K_p
+      - K_1
+      - K_2
+      - K_i
+      - I_min
+      - I_max
+      - out_sat
+      - ap_K
+      - ap_T
     heave:
-    - K_p
-    - K_1
-    - K_2
-    - K_i
-    - I_min
-    - I_max
-    - out_sat
-    - ap_K
-    - ap_T
+      - K_p
+      - K_1
+      - K_2
+      - K_i
+      - I_min
+      - I_max
+      - out_sat
+      - ap_K
+      - ap_T
     flag_setup_feedback_speed: false
     debug_publish: true
     use_sim_time: false

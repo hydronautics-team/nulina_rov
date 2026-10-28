@@ -22,8 +22,11 @@ colcon build \
     asio_cmake_module \
     vectornav_msgs \
     vectornav \
+    parser \
+    ms5837_pressure_sensor \
     stingray_interface_bridge \
     pressure_sensor \
+    power_control \
     nulina_bringup
 
 echo "----------------------------------------"
