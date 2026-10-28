@@ -3,10 +3,8 @@ stingray_core_control_node:
     rate_hz: 100.0
     topic_control_data: /control/data
     topic_loop_flags: /control/loop_flags
-    sensor_backend: ah127c_ms5837
-    topic_ah127c_imu: /imu_full_data
-    topic_ms5837_depth: /ms5837/depth
-    ms5837_depth_scale: 0.001
+    topic_imu: /core/sensors/imu
+    topic_odometry: /core/state/odometry
     thrusters:
     - depth_front_right
     - depth_back_right
