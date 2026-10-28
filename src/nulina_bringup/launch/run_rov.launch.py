@@ -72,4 +72,19 @@ def generate_launch_description():
         include('ms5837_pressure_sensor', 'ms5837.launch.py'),
         include('power_control', 'power_gpio.launch.py'),
         include('parser', 'parser.launch.py'),
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(os.path.join(
+                get_package_share_directory('stingray_core_localization'),
+                'launch',
+                'localization.launch.py',
+            )),
+            launch_arguments={
+                'sensor_backend': 'standard_imu',
+                'imu_input_topic': '/imu_full_data',
+                'pressure_input_topic': '/ms5837/depth',
+                'pressure_input_type': 'float32',
+                'pressure_depth_scale': '0.001',
+                'enable_dvl': 'false',
+            }.items(),
+        ),
     ])
