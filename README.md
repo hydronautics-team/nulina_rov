@@ -121,6 +121,12 @@ Launch-аргументы передаются через `run_rov.sh`, напр
 ./run_rov.sh imu_port:=/dev/ttyUSB0
 ```
 
+Универсальный launcher `stingray_core_description` публикует описание аппарата,
+а геометрия Nulina хранится в
+`src/nulina_config/description/nulina.urdf.xacro`. В этом файле задаётся
+фиксированное преобразование `base_link` → `imu_link`; значения `imu_x/y/z` и
+`imu_roll/pitch/yaw` нужно выставить согласно фактической установке AH127C.
+
 Неиспользуемые конфиги panel, pressure, power и старого pressure_sensor
 не участвуют в основном запуске.
 

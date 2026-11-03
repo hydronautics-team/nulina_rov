@@ -15,6 +15,7 @@ setup(
         (os.path.join('share', package_name, 'launch'), glob('launch/*.launch.py')),
         (os.path.join('share', package_name, 'nulina_config', 'communication'), glob('../nulina_config/communication/*')),
         (os.path.join('share', package_name, 'nulina_config', 'control'), glob('../nulina_config/control/*')),
+        (os.path.join('share', package_name, 'nulina_config', 'description'), glob('../nulina_config/description/*')),
         (os.path.join('share', package_name, 'nulina_config', 'sensors'), glob('../nulina_config/sensors/*')),
     ],
     install_requires=['setuptools'],

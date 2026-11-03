@@ -11,8 +11,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-humble-launch-ros ros-humble-nav-msgs \
     ros-humble-rclcpp-components ros-humble-rclcpp-lifecycle \
     ros-humble-robot-localization \
+    ros-humble-robot-state-publisher ros-humble-xacro \
     ros-humble-rqt-common-plugins ros-humble-rqt-gui-py \
-    ros-humble-sensor-msgs ros-humble-tf2-geometry-msgs ros-humble-udp-msgs \
+    ros-humble-sensor-msgs ros-humble-tf2-geometry-msgs ros-humble-tf2-ros \
+    ros-humble-udp-msgs \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /stingray_core

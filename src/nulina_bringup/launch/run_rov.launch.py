@@ -86,6 +86,18 @@ def generate_launch_description():
         ),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(os.path.join(
+                get_package_share_directory('stingray_core_description'),
+                'launch',
+                'description.launch.py',
+            )),
+            launch_arguments={
+                'description_file': os.path.join(
+                    config_dir, 'description', 'nulina.urdf.xacro'
+                ),
+            }.items(),
+        ),
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(os.path.join(
                 get_package_share_directory('stingray_core_localization'),
                 'launch',
                 'localization.launch.py',

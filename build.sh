@@ -45,6 +45,7 @@ packages=(
     parser
     dvl_msgs
     vectornav_msgs
+    stingray_core_description
     stingray_core_localization
 )
 package_paths=(
@@ -58,6 +59,7 @@ package_paths=(
     "$core_dir/src/stingray_core_sensors/parser"
     "$core_dir/src/stingray_core_sensors/dvl_msgs"
     "$core_dir/src/stingray_core_sensors/vectornav/vectornav_msgs"
+    "$core_dir/src/stingray_core_description"
     "$core_dir/src/stingray_core_localization"
 )
 
