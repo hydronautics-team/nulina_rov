@@ -2,7 +2,7 @@ FROM ros:humble-ros-base
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bash-completion build-essential cmake git \
-    libasio-dev libserial-dev i2c-tools \
+    libasio-dev libgpiod-dev libserial-dev i2c-tools \
     python3-colcon-common-extensions python3-libgpiod python3-pyqtgraph \
     python3-smbus python3-smbus2 python3-yaml \
     ros-humble-ament-cmake-auto ros-humble-ament-cmake-gtest \
