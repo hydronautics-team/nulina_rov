@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-humble-geometry-msgs ros-humble-lifecycle-msgs \
     ros-humble-launch-ros ros-humble-nav-msgs \
     ros-humble-rclcpp-components ros-humble-rclcpp-lifecycle \
+    ros-humble-robot-localization \
     ros-humble-rqt-common-plugins ros-humble-rqt-gui-py \
     ros-humble-sensor-msgs ros-humble-tf2-geometry-msgs ros-humble-udp-msgs \
     && rm -rf /var/lib/apt/lists/*

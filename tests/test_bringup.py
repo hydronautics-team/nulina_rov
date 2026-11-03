@@ -9,8 +9,8 @@ from unittest.mock import patch
 
 import rclpy
 from rclpy.parameter import Parameter
+from nav_msgs.msg import Odometry
 from sensor_msgs.msg import Imu
-from std_msgs.msg import Float32
 import yaml
 
 from stingray_core_control.stingray_core_control_node import StingrayCoreControlNode
@@ -54,8 +54,8 @@ class NulinaControlTest(unittest.TestCase):
 
     def test_sensor_topics_and_platform_parameters(self):
         self.start_node()
-        self.assertEqual(self.node.sub_imu_data.topic_name, '/imu_full_data')
-        self.assertEqual(self.node.sub_pressure_sensor.topic_name, '/ms5837/depth')
+        self.assertEqual(self.node.sub_imu.topic_name, '/core/sensors/imu')
+        self.assertEqual(self.node.sub_odometry.topic_name, '/core/state/odometry')
         self.assertEqual(len(self.node.thrusters), 6)
         self.assertEqual(self.node.get_parameter('surge_right_u_surge').value, -1)
         self.assertEqual(self.node.get_parameter('controllers.yaw.K_p').value, 0.37)
@@ -63,8 +63,10 @@ class NulinaControlTest(unittest.TestCase):
         imu = Imu()
         imu.orientation.w = 1.0
         self.node.imu_callback(imu)
-        self.node.pressure_sensor_callback(Float32(data=1.25))
-        self.assertAlmostEqual(self.node.imu_yaw, 0.0)
+        odometry = Odometry()
+        odometry.pose.pose.position.z = -1.25
+        self.node.odometry_callback(odometry)
+        self.assertAlmostEqual(self.node.imu.yaw, 0.0)
         self.assertAlmostEqual(self.node.depth, 1.25)
 
     def test_tuning_survives_controller_restart(self):

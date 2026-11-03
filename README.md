@@ -1,7 +1,8 @@
 # Nulina ROV
 
-Платформа Нулины на ROS 2 Humble. Ядро `src/stingray_core` закреплено на
-коммите `e8dc8bc` ветки `nulina_2026-feat-imu-nulina-version1`.
+Платформа Нулины на ROS 2 Humble. Для текущего bringup требуется ядро
+`src/stingray_core` ревизии `cf6dc7b` или совместимое с ним: с пакетами
+локализации и протоколом движителей `nulina_crc8`.
 Схема работы такая же, как у `welt_rov`: контейнер монтирует весь репозиторий,
 а `run_rov.sh` собирает нужные пакеты и запускает аппарат.
 
@@ -89,17 +90,19 @@ IMAGE_NAME=stingray_core CONTAINER_NAME=nulina_rov ROS_DOMAIN_ID=1 ./run_docker.
 ## Оборудование и настройки
 
 Запускаются serial bridge, драйвер шести движителей, контроллер, AH127C,
-MS5837 и GPIO-питание. В этой ветке нет DVL и локализации Welt.
+MS5837, локализация без DVL и GPIO-питание.
 
 | Устройство | Подключение / топик | Где настраивается |
 | --- | --- | --- |
 | Плата движителей | `/dev/ttyAMA5`, 115200 | `src/nulina_config/communication/thruster.params.yaml` |
-| AH127C | `/dev/ttyUSB0`, 115200; `/imu_full_data` (`sensor_msgs/Imu`) | Порт и скорость фиксированы в драйвере этой ветки |
-| MS5837 | I²C; `/ms5837/depth` (`std_msgs/Float32`, метры) | Драйвер `ms5837_pressure_sensor` |
-| Питание | `gpiochip0`, линия 16, включено при старте | `src/stingray_core/src/power_control/config/power_gpio.param.yaml` |
+| AH127C | `/dev/ttyUSB0`, 115200; `/imu_full_data` (`sensor_msgs/Imu`) | Launch-аргумент `imu_port`; скорость 115200 фиксирована драйвером |
+| MS5837 | I²C; `/ms5837/depth` (`std_msgs/Float32`, миллиметры) | Драйвер `ms5837_pressure_sensor`; локализация переводит значение в метры |
+| Питание | `gpiochip0`, линия 16, включено при старте | `src/stingray_core/src/stingray_core_devices/power_control/config/power_gpio.param.yaml` |
 
-Контроллер получает IMU из `/imu_full_data`, глубину из `/ms5837/depth`,
-команды из `/control/data` и маску контуров из `/control/loop_flags`.
+Локализация получает IMU из `/imu_full_data` и глубину из `/ms5837/depth`.
+Контроллер получает нормализованную IMU из `/core/sensors/imu`, состояние из
+`/core/state/odometry`, команды из `/control/data` и маску контуров из
+`/control/loop_flags`.
 Матрица движителей и коэффициенты сохранены из конфигурации Нулины.
 
 Три YAML-файла управления находятся в `src/nulina_config/control`.
@@ -115,6 +118,7 @@ Launch-аргументы передаются через `run_rov.sh`, напр
 ```bash
 ./run_rov.sh thruster_params_file:=/stingray_core/src/nulina_config/communication/thruster.params.yaml
 ./run_rov.sh control_config_dir:=/stingray_core/src/nulina_config/control
+./run_rov.sh imu_port:=/dev/ttyUSB0
 ```
 
 Неиспользуемые конфиги panel, pressure, power и старого pressure_sensor

@@ -93,6 +93,8 @@ run nulina \
 
 run nulina \
   thruster_params_file:=/stingray_core/src/nulina_config/communication/thruster.params.yaml
+
+run nulina imu_port:=/dev/ttyUSB0
 ```
 
 Debug-режим можно сочетать с launch-аргументами:

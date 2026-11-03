@@ -35,6 +35,11 @@ def generate_launch_description():
             default_value=os.path.join(config_dir, 'communication', 'thruster.params.yaml'),
             description='Serial port settings for the thruster board',
         ),
+        DeclareLaunchArgument(
+            'imu_port',
+            default_value='/dev/ttyUSB0',
+            description='Serial device used by the LC-AH127C IMU',
+        ),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(os.path.join(
                 serial_share, 'launch', 'serial_driver_bridge_node.launch.py'
@@ -71,7 +76,14 @@ def generate_launch_description():
         ),
         include('ms5837_pressure_sensor', 'ms5837.launch.py'),
         include('power_control', 'power_gpio.launch.py'),
-        include('parser', 'parser.launch.py'),
+        Node(
+            package='parser',
+            executable='imu_node',
+            name='imu_node',
+            output='screen',
+            emulate_tty=True,
+            parameters=[{'port': LaunchConfiguration('imu_port')}],
+        ),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(os.path.join(
                 get_package_share_directory('stingray_core_localization'),
