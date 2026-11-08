@@ -6,12 +6,12 @@ stingray_core_control_node:
     topic_imu: /core/sensors/imu
     topic_odometry: /core/state/odometry
     thrusters:
-    - depth_front_right
     - depth_back_right
+    - depth_front_right
     - surge_right
     - surge_left
-    - depth_back_left
     - depth_front_left
+    - depth_back_left
     axes:
     - surge
     - sway
@@ -79,6 +79,6 @@ stingray_core_control_node:
     - out_sat
     - ap_K
     - ap_T
-    flag_setup_feedback_speed: true
+    flag_setup_feedback_speed: false
     debug_publish: false
     use_sim_time: false

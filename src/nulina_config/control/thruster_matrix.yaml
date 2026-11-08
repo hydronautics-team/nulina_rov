@@ -1,16 +1,16 @@
 stingray_core_control_node:
   ros__parameters:
     depth_front_right_surge: 0
-    depth_front_right_sway: -1
+    depth_front_right_sway: 1
     depth_front_right_heave: 1
-    depth_front_right_roll: -1
-    depth_front_right_pitch: 1
+    depth_front_right_roll: 1
+    depth_front_right_pitch: -1
     depth_front_right_yaw: 0
     depth_back_right_surge: 0
-    depth_back_right_sway: 1
+    depth_back_right_sway: -1
     depth_back_right_heave: 1
-    depth_back_right_roll: -1
-    depth_back_right_pitch: -1
+    depth_back_right_roll: 1
+    depth_back_right_pitch: 1
     depth_back_right_yaw: 0
     surge_right_surge: 1
     surge_right_sway: 0
@@ -26,13 +26,13 @@ stingray_core_control_node:
     surge_left_yaw: -1
     depth_back_left_surge: 0
     depth_back_left_sway: -1
-    depth_back_left_heave: 1
+    depth_back_left_heave: -1
     depth_back_left_roll: 1
     depth_back_left_pitch: -1
     depth_back_left_yaw: 0
     depth_front_left_surge: 0
-    depth_front_left_sway: 1
+    depth_front_left_sway: -1
     depth_front_left_heave: 1
-    depth_front_left_roll: 1
-    depth_front_left_pitch: 1
+    depth_front_left_roll: -1
+    depth_front_left_pitch: -1
     depth_front_left_yaw: 0
