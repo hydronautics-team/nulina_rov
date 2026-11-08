@@ -12,18 +12,18 @@ stingray_core_control_node:
     depth_back_right_roll: -1
     depth_back_right_pitch: -1
     depth_back_right_yaw: 0
-    surge_right_surge: -1
+    surge_right_surge: 1
     surge_right_sway: 0
     surge_right_heave: 0
     surge_right_roll: 0
     surge_right_pitch: 0
-    surge_right_yaw: 1
-    surge_left_surge: 1
+    surge_right_yaw: -1
+    surge_left_surge: -1
     surge_left_sway: 0
     surge_left_heave: 0
     surge_left_roll: 0
     surge_left_pitch: 0
-    surge_left_yaw: 1
+    surge_left_yaw: -1
     depth_back_left_surge: 0
     depth_back_left_sway: -1
     depth_back_left_heave: 1

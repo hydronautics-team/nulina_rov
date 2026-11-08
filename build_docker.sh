@@ -2,4 +2,4 @@
 set -eo pipefail
 
 cd "$(dirname "$0")"
-exec docker build --tag "${IMAGE_NAME:-nulina_rov:humble}" "$@" docker
+exec docker build --tag "${IMAGE_NAME:-nulina_rov:humble}" "$@" src/stingray_core/docker

@@ -37,7 +37,7 @@ def generate_launch_description():
         ),
         DeclareLaunchArgument(
             'imu_port',
-            default_value='/dev/ttyUSB0',
+            default_value='/dev/imu',
             description='Serial device used by the LC-AH127C IMU',
         ),
         IncludeLaunchDescription(
@@ -83,6 +83,12 @@ def generate_launch_description():
             output='screen',
             emulate_tty=True,
             parameters=[{'port': LaunchConfiguration('imu_port')}],
+        ),
+        Node(
+            package='manipulator_package',
+            executable='manipulator_sub_node',
+            name='manipulator_sub_node',
+            output='screen',
         ),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(os.path.join(

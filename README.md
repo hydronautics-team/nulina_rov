@@ -118,7 +118,7 @@ Launch-аргументы передаются через `run_rov.sh`, напр
 ```bash
 ./run_rov.sh thruster_params_file:=/stingray_core/src/nulina_config/communication/thruster.params.yaml
 ./run_rov.sh control_config_dir:=/stingray_core/src/nulina_config/control
-./run_rov.sh imu_port:=/dev/ttyUSB0
+./run_rov.sh imu_port:=/dev/imu
 ```
 
 Универсальный launcher `stingray_core_description` публикует описание аппарата,
