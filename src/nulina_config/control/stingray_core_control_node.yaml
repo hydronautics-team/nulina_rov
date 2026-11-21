@@ -80,5 +80,5 @@ stingray_core_control_node:
     - ap_K
     - ap_T
     flag_setup_feedback_speed: false
-    debug_publish: false
+    debug_publish: true
     use_sim_time: false
