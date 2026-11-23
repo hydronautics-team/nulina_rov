@@ -1,4 +1,4 @@
-"""Bring up Nulina's thrusters, AH127C IMU, MS5837 and GPIO power control."""
+"""Bring up Nulina's thrusters, vectornav, MS5837 and GPIO power control."""
 
 import os
 
@@ -15,6 +15,7 @@ def generate_launch_description():
     platform_share = get_package_share_directory('nulina_bringup')
     config_dir = os.path.join(platform_share, 'nulina_config')
     serial_share = get_package_share_directory('serial_driver')
+    vectornav_pkg = get_package_share_directory('vectornav')
 
     def include(package, filename):
         return IncludeLaunchDescription(PythonLaunchDescriptionSource(
@@ -35,11 +36,6 @@ def generate_launch_description():
             default_value=os.path.join(config_dir, 'communication', 'thruster.params.yaml'),
             description='Serial port settings for the thruster board',
         ),
-        DeclareLaunchArgument(
-            'imu_port',
-            default_value='/dev/imu',
-            description='Serial device used by the LC-AH127C IMU',
-        ),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(os.path.join(
                 serial_share, 'launch', 'serial_driver_bridge_node.launch.py'
@@ -47,6 +43,9 @@ def generate_launch_description():
             launch_arguments={
                 'params_file': LaunchConfiguration('thruster_params_file'),
             }.items(),
+        ),
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(os.path.join(vectornav_pkg, 'launch', 'vectornav.launch.py'))
         ),
         Node(
             package='stingray_core_communication',
@@ -77,14 +76,6 @@ def generate_launch_description():
         include('ms5837_pressure_sensor', 'ms5837.launch.py'),
         include('power_control', 'power_gpio.launch.py'),
         Node(
-            package='parser',
-            executable='imu_node',
-            name='imu_node',
-            output='screen',
-            emulate_tty=True,
-            parameters=[{'port': LaunchConfiguration('imu_port')}],
-        ),
-        Node(
             package='manipulator_package',
             executable='manipulator_sub_node',
             name='manipulator_sub_node',
@@ -109,8 +100,6 @@ def generate_launch_description():
                 'localization.launch.py',
             )),
             launch_arguments={
-                'sensor_backend': 'standard_imu',
-                'imu_input_topic': '/imu_full_data',
                 'pressure_input_topic': '/ms5837/depth',
                 'pressure_input_type': 'float32',
                 'pressure_depth_scale': '0.001',

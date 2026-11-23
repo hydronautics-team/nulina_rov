@@ -14,7 +14,8 @@
   <exec_depend>launch_ros</exec_depend>
   <exec_depend>lifecycle_msgs</exec_depend>
   <exec_depend>ms5837_pressure_sensor</exec_depend>
-  <exec_depend>parser</exec_depend>
+  <exec_depend>vectornav</exec_depend>
+  <exec_depend>vectornav_msgs</exec_depend>
   <exec_depend>power_control</exec_depend>
   <exec_depend>serial_driver</exec_depend>
   <exec_depend>stingray_core_communication</exec_depend>

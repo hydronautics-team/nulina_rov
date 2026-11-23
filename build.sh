@@ -13,10 +13,6 @@ fi
 
 core_dir="$(pwd)/src/stingray_core"
 patch_file="$(pwd)/patches/stingray_core-platform-config.patch"
-if [ ! -f "$core_dir/src/stingray_core_sensors/parser/src/main.cpp" ]; then
-    echo "Initialize the pinned Nulina core: git submodule update --init --recursive" >&2
-    exit 1
-fi
 
 # Older Nulina core revisions need the backport. Newer revisions already
 # understand STINGRAY_CONFIG_DIR (the helper moved to utils/save_params.py).
@@ -42,9 +38,8 @@ packages=(
     stingray_core_control
     ms5837_pressure_sensor
     power_control
-    parser
-    dvl_msgs
     vectornav_msgs
+    vectornav
     stingray_core_description
     stingray_core_localization
     manipulator_package
@@ -57,7 +52,7 @@ package_paths=(
     "$core_dir/src/stingray_core_control"
     "$core_dir/src/stingray_core_sensors/ms5837_pressure_sensor"
     "$core_dir/src/stingray_core_devices/power_control"
-    "$core_dir/src/stingray_core_sensors/parser"
+    "$core_dir/src/stingray_core_sensors/vectornav/vectornav"
     "$core_dir/src/stingray_core_sensors/dvl_msgs"
     "$core_dir/src/stingray_core_sensors/vectornav/vectornav_msgs"
     "$core_dir/src/stingray_core_description"
