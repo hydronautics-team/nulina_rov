@@ -80,5 +80,10 @@ stingray_core_control_node:
     - ap_K
     - ap_T
     flag_setup_feedback_speed: false
+    feedback_speed.heave: false
+    feedback_speed.roll: false
+    feedback_speed.pitch: false
+    feedback_speed.yaw: false
+    depth_rate_timeout_sec: 0.5
     debug_publish: false
     use_sim_time: false
