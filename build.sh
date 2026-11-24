@@ -43,6 +43,7 @@ packages=(
     stingray_core_description
     stingray_core_localization
     manipulator_package
+    killswitch_package
 )
 package_paths=(
     "$core_dir/src/stingray_core_communication/asio_cmake_module"
@@ -58,6 +59,7 @@ package_paths=(
     "$core_dir/src/stingray_core_description"
     "$core_dir/src/stingray_core_localization"
     "$core_dir/src/stingray_core_devices/manipulator_package"
+    "$core_dir/src/stingray_core_devices/killswitch_package"
 )
 
 for package_path in "${package_paths[@]}"; do
