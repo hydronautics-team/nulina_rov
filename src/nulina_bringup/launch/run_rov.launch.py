@@ -81,6 +81,12 @@ def generate_launch_description():
             name='manipulator_sub_node',
             output='screen',
         ),
+        Node(
+            package='killswitch_package',
+            executable='killswitch_sub_node',
+            name='killswitch_sub_node',
+            output='screen',
+        ),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(os.path.join(
                 get_package_share_directory('stingray_core_description'),
